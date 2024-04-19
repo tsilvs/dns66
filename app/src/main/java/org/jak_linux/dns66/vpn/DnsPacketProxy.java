@@ -74,7 +74,7 @@ public class DnsPacketProxy {
 
     public DnsPacketProxy(EventLoop eventLoop) {
         this.eventLoop = eventLoop;
-        this.ruleDatabase = RuleDatabase.getInstance();
+        this.ruleDatabase = RuleDatabase.Companion.getInstance();
     }
 
     /**
