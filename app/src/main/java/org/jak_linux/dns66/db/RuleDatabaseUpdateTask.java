@@ -182,7 +182,7 @@ public class RuleDatabaseUpdateTask extends AsyncTask<Void, Void, Void> {
 
                 lastErrors.set(errors);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-                        intent, PendingIntent.FLAG_ONE_SHOT);
+                        intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
 
 
                 notificationBuilder.setContentIntent(pendingIntent);

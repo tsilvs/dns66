@@ -253,7 +253,7 @@ public class StartFragment extends Fragment {
             intent.putExtra("COMMAND", Command.START.ordinal());
             intent.putExtra("NOTIFICATION_INTENT",
                     PendingIntent.getActivity(getContext(), 0,
-                            new Intent(getContext(), MainActivity.class), 0));
+                            new Intent(getContext(), MainActivity.class), PendingIntent.FLAG_IMMUTABLE));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 getContext().startForegroundService(intent);
             } else {

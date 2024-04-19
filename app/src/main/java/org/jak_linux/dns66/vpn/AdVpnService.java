@@ -120,7 +120,7 @@ public class AdVpnService extends VpnService implements Handler.Callback {
 
         notificationBuilder.addAction(R.drawable.ic_pause_black_24dp, getString(R.string.notification_action_pause),
                 PendingIntent.getService(this, REQUEST_CODE_PAUSE, new Intent(this, AdVpnService.class)
-                                .putExtra("COMMAND", Command.PAUSE.ordinal()), 0))
+                                .putExtra("COMMAND", Command.PAUSE.ordinal()), PendingIntent.FLAG_IMMUTABLE))
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
@@ -155,7 +155,7 @@ public class AdVpnService extends VpnService implements Handler.Callback {
         intent.putExtra("COMMAND", Command.START.ordinal());
         intent.putExtra("NOTIFICATION_INTENT",
                 PendingIntent.getActivity(context, 0,
-                        new Intent(context, MainActivity.class), 0));
+                        new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE));
         return intent;
     }
 
@@ -165,7 +165,7 @@ public class AdVpnService extends VpnService implements Handler.Callback {
         intent.putExtra("COMMAND", Command.RESUME.ordinal());
         intent.putExtra("NOTIFICATION_INTENT",
                 PendingIntent.getActivity(context, 0,
-                        new Intent(context, MainActivity.class), 0));
+                        new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE));
         return intent;
     }
 

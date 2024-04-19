@@ -508,7 +508,7 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
                 .setSession("DNS66")
                 .setConfigureIntent(
                         PendingIntent.getActivity(vpnService, 1, new Intent(vpnService, MainActivity.class),
-                                PendingIntent.FLAG_CANCEL_CURRENT)).establish();
+                                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE)).establish();
         Log.i(TAG, "Configured");
         return pfd;
     }

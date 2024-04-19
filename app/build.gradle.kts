@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "org.jak_linux.dns66"
-    compileSdk = 29
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "org.jak_linux.dns66"
         minSdk = 21
-        targetSdk = 29
+        targetSdk = 34
         versionCode = 29
         versionName = "0.6.8"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
