@@ -40,7 +40,7 @@ open class RuleDatabaseUpdateTask(
         private const val UPDATE_NOTIFICATION_ID = 42
 
         @JvmField
-        val lastErrors = AtomicReference<List<String>>(null)
+        val lastErrors = AtomicReference<MutableList<String>>(null)
     }
 
     private val errors = ArrayList<String>()

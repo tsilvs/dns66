@@ -419,8 +419,8 @@ class AdVpnThread(
     }
 
     fun configurePackages(builder: VpnService.Builder, config: Configuration) {
-        val allowOnVpn: Set<String> = HashSet()
-        val doNotAllowOnVpn: Set<String> = HashSet()
+        val allowOnVpn: MutableSet<String> = HashSet()
+        val doNotAllowOnVpn: MutableSet<String> = HashSet()
 
         config.allowlist.resolve(vpnService.packageManager, allowOnVpn, doNotAllowOnVpn)
 

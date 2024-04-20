@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.jak_linux.dns66.Configuration
 import org.jak_linux.dns66.FileHelper
+import org.jak_linux.dns66.ItemChangedListener
 import org.jak_linux.dns66.MainActivity
 import org.jak_linux.dns66.R
 import org.jak_linux.dns66.db.RuleDatabaseUpdateJobService
@@ -67,11 +69,14 @@ class HostsFragment : Fragment(), FloatingActionButtonFragment {
     override fun setupFloatingActionButton(fab: FloatingActionButton) {
         fab.setOnClickListener {
             val main = requireActivity() as MainActivity
-            main.editItem(3, null) { item ->
-                MainActivity.config.hosts.items.add(item)
-                adapter?.notifyItemInserted((adapter?.itemCount ?: 0) - 1)
-                FileHelper.writeSettings(context, MainActivity.config)
-            }
+            main.editItem(3, null, object : ItemChangedListener {
+                override fun onItemChanged(item: Configuration.Item?) {
+                    item ?: return
+                    MainActivity.config.hosts.items.add(item)
+                    adapter?.notifyItemInserted((adapter?.itemCount ?: 0) - 1)
+                    FileHelper.writeSettings(requireContext(), MainActivity.config)
+                }
+            })
         }
     }
 }

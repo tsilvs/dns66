@@ -113,7 +113,7 @@ class AllowlistFragment : Fragment() {
                         resources.getStringArray(R.array.allowlist_defaults)[MainActivity.config.allowlist.defaultMode]
                     appListGenerator = AppListGenerator(requireContext().packageManager)
                     appListGenerator?.execute()
-                    FileHelper.writeSettings(context, MainActivity.config)
+                    FileHelper.writeSettings(requireContext(), MainActivity.config)
                     return@setOnMenuItemClickListener true
                 }
 
@@ -134,7 +134,7 @@ class AllowlistFragment : Fragment() {
 
     inner class AppListAdapter(val pm: PackageManager, val list: ArrayList<ListEntry>) :
         RecyclerView.Adapter<AppListAdapter.ViewHolder>() {
-        private val onVpn: Set<String> = HashSet()
+        private val onVpn: MutableSet<String> = HashSet()
         private val notOnVpn = HashSet<String>()
 
         init {

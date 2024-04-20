@@ -18,6 +18,7 @@ import org.jak_linux.dns66.R
 import org.jak_linux.dns66.SingleWriterMultipleReaderFile
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -56,7 +57,7 @@ class RuleDatabaseItemUpdateRunnable(
         }
 
         file = FileHelper.getItemFile(context, item)
-        if (file == null || !item.isDownloadable) {
+        if (file == null || !item.isDownloadable()) {
             return false
         }
 
@@ -107,7 +108,7 @@ class RuleDatabaseItemUpdateRunnable(
             return
         }
 
-        val singleWriterMultipleReaderFile = SingleWriterMultipleReaderFile(file)
+        val singleWriterMultipleReaderFile = SingleWriterMultipleReaderFile(file!!)
         var connection: HttpURLConnection? = null
         parentTask.addBegin(item)
         try {
@@ -225,10 +226,9 @@ class RuleDatabaseItemUpdateRunnable(
         connection: HttpURLConnection
     ) {
         val inStream = connection.inputStream
-        var outStream = singleWriterMultipleReaderFile.startWrite()
-
+        var outStream: FileOutputStream? = singleWriterMultipleReaderFile.startWrite()
         try {
-            copyStream(inStream, outStream)
+            copyStream(inStream, outStream!!)
 
             singleWriterMultipleReaderFile.finishWrite(outStream)
             outStream = null

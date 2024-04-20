@@ -17,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import org.jak_linux.dns66.Configuration
 import org.jak_linux.dns66.FileHelper
+import org.jak_linux.dns66.ItemChangedListener
 import org.jak_linux.dns66.MainActivity
 import org.jak_linux.dns66.R
 
@@ -116,16 +117,18 @@ class ItemRecyclerViewAdapter(
             } else if (v === view) {
                 // Start edit activity
                 val main = v.context as MainActivity
-                main.editItem(stateChoices, item) { changedItem ->
-                    if (changedItem == null) {
-                        items.removeAt(position)
-                        notifyItemRemoved(position)
-                    } else {
-                        items[position] = changedItem
-                        this@ItemRecyclerViewAdapter.notifyItemChanged(position)
+                main.editItem(stateChoices, item, object : ItemChangedListener {
+                    override fun onItemChanged(item: Configuration.Item?) {
+                        if (item == null) {
+                            items.removeAt(position)
+                            notifyItemRemoved(position)
+                        } else {
+                            items[position] = item
+                            this@ItemRecyclerViewAdapter.notifyItemChanged(position)
+                        }
+                        FileHelper.writeSettings(itemView.context, MainActivity.config)
                     }
-                    FileHelper.writeSettings(itemView.context, MainActivity.config)
-                }
+                })
             }
         }
     }

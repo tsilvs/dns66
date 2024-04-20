@@ -147,7 +147,7 @@ class StartFragment : Fragment() {
         ipV6Support.isChecked = MainActivity.config.ipV6Support
         ipV6Support.setOnCheckedChangeListener { _, isChecked ->
             MainActivity.config.ipV6Support = isChecked
-            FileHelper.writeSettings(context, MainActivity.config)
+            FileHelper.writeSettings(requireContext(), MainActivity.config)
         }
 
         ExtraBar.setup(rootView.findViewById(R.id.extra_bar), "start")
@@ -206,7 +206,7 @@ class StartFragment : Fragment() {
         for (item in MainActivity.config.hosts.items) {
             if (item.state != Configuration.Item.STATE_IGNORE) {
                 try {
-                    val reader = FileHelper.openItemFile(context, item) ?: continue
+                    val reader = FileHelper.openItemFile(requireContext(), item) ?: continue
                     reader.close()
                 } catch (e: IOException) {
                     return false

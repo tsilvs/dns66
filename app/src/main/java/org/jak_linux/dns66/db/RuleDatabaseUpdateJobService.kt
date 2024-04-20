@@ -71,7 +71,7 @@ class RuleDatabaseUpdateJobService : JobService() {
 
         task = object : RuleDatabaseUpdateTask(
             applicationContext,
-            FileHelper.loadCurrentSettings(applicationContext),
+            FileHelper.loadCurrentSettings(applicationContext)!!,
             true
         ) {
             override fun onPostExecute(result: Void?) {

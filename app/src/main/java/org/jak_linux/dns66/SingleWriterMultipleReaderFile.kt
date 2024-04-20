@@ -5,15 +5,14 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-package org.jak_linux.dns66;
+package org.jak_linux.dns66
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * A file that multiple readers can safely read from and a single
@@ -27,35 +26,33 @@ import java.io.OutputStream;
  * failure, the work file is deleted; on success, it rename()ed to the specified
  * one, causing it to replace that atomically.
  */
-public class SingleWriterMultipleReaderFile {
-
-    File activeFile;
-    File workFile;
-
-    public SingleWriterMultipleReaderFile(File file) {
-        activeFile = file.getAbsoluteFile();
-        workFile = new File(activeFile.getAbsolutePath() + ".dns66-new");
+class SingleWriterMultipleReaderFile(file: File) {
+    companion object {
+        private const val TAG = "SingleWriteMultipleReaderFile"
     }
+
+    val activeFile = file.absoluteFile
+    val workFile = File(activeFile.absolutePath + ".dns66-new")
 
     /**
      * Opens the known-good file for reading.
      * @return A {@link FileInputStream} to read from
      * @throws FileNotFoundException See {@link FileInputStream}
      */
-    public InputStream openRead() throws FileNotFoundException {
-        return new FileInputStream(activeFile);
-    }
+    @Throws(FileNotFoundException::class)
+    fun openRead(): InputStream = FileInputStream(activeFile)
 
     /**
      * Starts a write.
      * @return A writable stream.
      * @throws IOException If the work file cannot be replaced or opened for writing.
      */
-    public FileOutputStream startWrite() throws IOException {
-        if (workFile.exists() && !workFile.delete())
-            throw new IOException("Cannot delete working file");
-
-        return new FileOutputStream(workFile);
+    @Throws(IOException::class)
+    fun startWrite(): FileOutputStream {
+        if (workFile.exists() && !workFile.delete()) {
+            throw IOException("Cannot delete working file")
+        }
+        return FileOutputStream(workFile)
     }
 
     /**
@@ -63,17 +60,17 @@ public class SingleWriterMultipleReaderFile {
      * @param stream
      * @throws IOException
      */
-    public void finishWrite(FileOutputStream stream) throws IOException {
+    @Throws(IOException::class)
+    fun finishWrite(stream: FileOutputStream) {
         try {
-            stream.close();
-        } catch (IOException e) {
-            failWrite(stream);
-            throw e;
+            stream.close()
+        } catch (e: IOException) {
+            failWrite(stream)
+            throw e
         }
-
         if (!workFile.renameTo(activeFile)) {
-            failWrite(stream);
-            throw new IOException("Cannot commit transaction");
+            failWrite(stream)
+            throw IOException("Cannot commit transaction")
         }
     }
 
@@ -82,9 +79,11 @@ public class SingleWriterMultipleReaderFile {
      * @param stream
      * @throws IOException
      */
-    public void failWrite(FileOutputStream stream) throws IOException {
-        FileHelper.closeOrWarn(stream, "SingleWriterMultipleReaderFile", "Cannot close working file");
-        if (!workFile.delete())
-            throw new IOException("Cannot delete working file");
+    @Throws(IOException::class)
+    fun failWrite(stream: FileOutputStream) {
+        FileHelper.closeOrWarn(stream, TAG, "Cannot close working file")
+        if (!workFile.delete()) {
+            throw IOException("Cannot delete working file")
+        }
     }
 }
