@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
         if (viewPager.getChildAt(0) == null)
             return;
 
-        StartFragment.updateStatus(viewPager.getChildAt(0).getRootView(), status);
+        StartFragment.Companion.updateStatus(viewPager.getChildAt(0).getRootView(), status);
     }
 
     @Override
