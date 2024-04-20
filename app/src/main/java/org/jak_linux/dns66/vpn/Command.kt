@@ -10,12 +10,11 @@
  * Contributions shall also be provided under any later versions of the
  * GPL.
  */
-package org.jak_linux.dns66.vpn;
+package org.jak_linux.dns66.vpn
 
-/**
- * Created by jak on 18/10/16.
- */
-
-public enum Command {
-    START, STOP, PAUSE, RESUME
+enum class Command {
+    START,
+    STOP,
+    PAUSE,
+    RESUME,
 }

@@ -71,7 +71,7 @@ public class StartFragment extends Fragment {
             }
         });
 
-        updateStatus(rootView, AdVpnService.vpnStatus);
+        updateStatus(rootView, AdVpnService.Companion.getVpnStatus());
 
         switchOnBoot.setChecked(MainActivity.config.autoStart);
         switchOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -132,7 +132,7 @@ public class StartFragment extends Fragment {
     }
 
     private boolean startStopService() {
-        if (AdVpnService.vpnStatus != AdVpnService.VPN_STATUS_STOPPED) {
+        if (AdVpnService.Companion.getVpnStatus() != AdVpnService.VPN_STATUS_STOPPED) {
             Log.i(TAG, "Attempting to disconnect");
 
             Intent intent = new Intent(getActivity(), AdVpnService.class);
@@ -153,8 +153,8 @@ public class StartFragment extends Fragment {
         if (stateImage == null || stateText == null)
             return;
 
-        stateText.setText(rootView.getContext().getString(AdVpnService.vpnStatusToTextId(status)));
-        stateImage.setContentDescription(rootView.getContext().getString(AdVpnService.vpnStatusToTextId(status)));
+        stateText.setText(rootView.getContext().getString(AdVpnService.Companion.vpnStatusToTextId(status)));
+        stateImage.setContentDescription(rootView.getContext().getString(AdVpnService.Companion.vpnStatusToTextId(status)));
         stateImage.setImageAlpha(255);
         stateImage.setImageTintList(ContextCompat.getColorStateList(context, R.color.colorStateImage));
         switch(status) {

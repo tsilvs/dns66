@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         pageChangeListener.onPageSelected(viewPager.getCurrentItem());
-        updateStatus(AdVpnService.vpnStatus);
+        updateStatus(AdVpnService.Companion.getVpnStatus());
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(vpnServiceBroadcastReceiver, new IntentFilter(AdVpnService.VPN_UPDATE_STATUS_INTENT));
     }

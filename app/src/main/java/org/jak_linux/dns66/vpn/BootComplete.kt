@@ -10,16 +10,14 @@
  * Contributions shall also be provided under any later versions of the
  * GPL.
  */
-package org.jak_linux.dns66.vpn;
+package org.jak_linux.dns66.vpn
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 
-public class BootComplete extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        AdVpnService.checkStartVpnOnBoot(context);
+class BootComplete : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent?) {
+        AdVpnService.checkStartVpnOnBoot(context)
     }
 }
