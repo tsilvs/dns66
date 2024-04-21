@@ -32,7 +32,7 @@ object FileHelper {
      * the same name in the assets.
      */
     @Throws(IOException::class)
-    fun openRead(context: Context, filename: String?): InputStream? =
+    fun openRead(context: Context, filename: String?): InputStream =
         try {
             context.openFileInput(filename)
         } catch (e: FileNotFoundException) {
@@ -62,7 +62,7 @@ object FileHelper {
         name: String,
         defaultsOnly: Boolean
     ): Configuration {
-        val stream: InputStream? = if (defaultsOnly) {
+        val stream: InputStream = if (defaultsOnly) {
             context.assets.open(name)
         } else {
             openRead(context, name)

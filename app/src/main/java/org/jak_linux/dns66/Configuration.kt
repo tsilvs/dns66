@@ -12,6 +12,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
+import androidx.annotation.Keep
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.IOException
@@ -35,7 +36,7 @@ class Configuration {
         const val MINOR_VERSION = 3
 
         @Throws(IOException::class)
-        fun read(reader: Reader?): Configuration {
+        fun read(reader: Reader): Configuration {
             val config = GSON.fromJson(reader, Configuration::class.java)
             if (config.version > VERSION) {
                 throw IOException("Unhandled file format version")
@@ -62,6 +63,7 @@ class Configuration {
     var dnsServers = DnsServers()
 
     // Apologies for the legacy alternate
+    @Keep
     @SerializedName(value = "allowlist", alternate = ["whitelist"])
     var allowlist = Allowlist()
     var showNotification = true
@@ -193,17 +195,20 @@ class Configuration {
         }
     }
 
+    @Keep
     inner class Hosts {
         var enabled = false
         var automaticRefresh = false
         var items: MutableList<Item> = ArrayList()
     }
 
+    @Keep
     inner class DnsServers {
         var enabled = false
         var items: MutableList<Item> = ArrayList()
     }
 
+    @Keep
     class Allowlist {
         companion object {
             /**
