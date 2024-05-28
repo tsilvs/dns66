@@ -13,7 +13,6 @@ android {
         targetSdk = 34
         versionCode = 29
         versionName = "0.6.8"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -43,18 +42,4 @@ dependencies {
     implementation("dnsjava:dnsjava:3.0.0")
 
     implementation("com.google.code.gson:gson:2.10.1")
-
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    testImplementation ("org.powermock:powermock-api-mockito:1.6.6") {
-        exclude(module = "hamcrest-core")
-        exclude(module = "objenesis")
-    }
-    testImplementation ("org.powermock:powermock-module-junit4:1.6.6") {
-        exclude(module = "hamcrest-core")
-        exclude(module = "objenesis")
-    }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0") {
-        exclude(group = "com.android.support", module = "support-annotations")
-    }
 }
